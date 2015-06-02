@@ -26,7 +26,7 @@ Java swing application that monitors a G-mail account for unread messages and me
       * who the message was from
       * what time it was received
       * subject of message
-      * snippit of email
+      * snippit of message
     2. Alert View: [**_OverdueMessageView_**](https://github.com/b-martyn/GMonitor/blob/master/GmailQuickstart/src/main/java/gmailAlert/OverdueMessageView.java) ListCellRenderer
       * who the message was from
       * how many days, hours, minutes, seconds message is overdue
