@@ -24,7 +24,7 @@ Java swing application that monitors a G-mail account for unread messages and me
   2. View: **_ServiceQueueView_**
     1. Main View: 
       1. who the message was from
-      2. what time it was received (displayed as: 'hour:minute')
+      2. what time it was received
       3. subject of message
       4. snippit of email
     2. Alert View:
