@@ -31,5 +31,5 @@ Java swing application that monitors a G-mail account for unread messages and me
       * who the message was from
       * how many days, hours, minutes, seconds message is overdue
   3. Controller: [**_ServiceQueueController_**](https://github.com/b-martyn/GMonitor/blob/master/GmailQuickstart/src/main/java/gmailAlert/ServiceQueueController.java)
-      * threshold for unread messages and un-serviced messages
+      * threshold for unread messages and messages not replied to
       * alert creation
