@@ -18,7 +18,7 @@ import com.google.api.services.gmail.model.Thread;
 /**
  * A factory for creating ServiceQueue Thread and Message objects from a G-mail service
  */
-public class ServiceQueueFactory {
+public final class ServiceQueueFactory {
 	
 	private static final String USER_ID = "me";
 	private static final String UNREAD_THREADS = "Label:INBOX Label:UNREAD";
@@ -26,12 +26,21 @@ public class ServiceQueueFactory {
 	private static Gmail service;
 	private static String email;
 	
+	private ServiceQueueFactory(){
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return ServiceQueue instance
+	 * @throws IOException Signals that connection is unauthorized
+	 */
 	public static ServiceQueue getServiceQueueInstance() throws IOException{
 		ServiceQueue queue = new ServiceQueue();
 		initiliaze();
 		
         queue.setUnread(filterUnreadThreads());
-        queue.setWaiting(filterWaitingThreads());
+	    queue.setWaiting(filterWaitingThreads());
         
 		return queue;
 	}
