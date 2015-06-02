@@ -10,7 +10,7 @@ Java swing application that monitors a G-mail account for unread messages and me
 
 1. *Factory*
 
-  **_ServiceQueueFactory_**
+  [**_ServiceQueueFactory_**](https://github.com/b-martyn/GMonitor/blob/master/GmailQuickstart/src/main/java/gmailAlert/ServiceQueueFactory.java)
   
     1. Contains a singleton instance of a Gmail service
     2. Used to obtain an instance of a ServiceQueue model
