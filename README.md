@@ -23,13 +23,13 @@ Java swing application that monitors a G-mail account for unread messages and me
     * List of Gmail.Threads that are read but not replied to
   2. View: **_ServiceQueueView_**
     1. Main View: 
-      1. who the message was from
-      2. what time it was received
-      3. subject of message
-      4. snippit of email
+      * who the message was from
+      * what time it was received
+      * subject of message
+      * snippit of email
     2. Alert View:
-      1. who the message was from
-      2. how many days, hours, minutes, seconds message is overdue
+      * who the message was from
+      * how many days, hours, minutes, seconds message is overdue
   3. Controller: **_ServiceQueueController_**
       * threshold for unread messages and un-serviced messages
       * alert creation
