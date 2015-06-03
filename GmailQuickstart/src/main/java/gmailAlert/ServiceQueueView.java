@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
@@ -26,7 +27,7 @@ import javax.swing.ListModel;
 import com.google.api.services.gmail.model.Thread;
 
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
 /**
  * The Class ServiceQueueView.
@@ -34,9 +35,10 @@ import javax.swing.border.EmptyBorder;
 public class ServiceQueueView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	//private ServiceQueue serviceQueue;
 	private JList<Thread> listNewMessages;
 	private JList<Thread> listWaitingMessages;
+	private JScrollPane scrollPaneNewMessages;
+	private JScrollPane scrollPaneWaitingMessages;
 	
 	/**
 	 * Instantiates a new service queue view.
@@ -73,99 +75,35 @@ public class ServiceQueueView extends JPanel {
 		add(serviceQueueView, gbc_serviceQueueView);
 		
 		{
-			JPanel unreadMessagePanel = new JPanel();
-			GridBagLayout gbl_unreadMessagePanel = new GridBagLayout();
-			gbl_unreadMessagePanel.columnWidths = new int[]{0, 0};
-			gbl_unreadMessagePanel.rowHeights = new int[]{0, 0, 0};
-			gbl_unreadMessagePanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_unreadMessagePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-			unreadMessagePanel.setLayout(gbl_unreadMessagePanel);
+			scrollPaneNewMessages = new JScrollPane();
+			scrollPaneNewMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			{
-				
-				JScrollPane scrollPaneNewMessages = new JScrollPane();
-				scrollPaneNewMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				{
-					JPanel newMessageListPanel = new JPanel();
-					GridBagLayout gbl_newMessageListPanel = new GridBagLayout();
-					gbl_newMessageListPanel.columnWidths = new int[]{0, 0};
-					gbl_newMessageListPanel.rowHeights = new int[]{0, 0};
-					gbl_newMessageListPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-					gbl_newMessageListPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-					newMessageListPanel.setLayout(gbl_newMessageListPanel);
-					
-					listNewMessages = new JList<Thread>();
-					listNewMessages.setEnabled(false);
-					listNewMessages.setCellRenderer(new MessageView());
-					GridBagConstraints gbc_listNewMessages = new GridBagConstraints();
-					gbc_listNewMessages.fill = GridBagConstraints.BOTH;
-					gbc_listNewMessages.gridx = 0;
-					gbc_listNewMessages.gridy = 0;
-					newMessageListPanel.add(listNewMessages, gbc_listNewMessages);
-					
-					scrollPaneNewMessages.setViewportView(newMessageListPanel);
-				}
 				JLabel unreadLabel = new JLabel("Pending Unread Messages");
-				unreadLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
-				GridBagConstraints gbc_unreadLabel = new GridBagConstraints();
-				gbc_unreadLabel.fill = GridBagConstraints.VERTICAL;
-				gbc_unreadLabel.gridx = 0;
-				gbc_unreadLabel.gridy = 0;
-				unreadMessagePanel.add(unreadLabel, gbc_unreadLabel);
+				unreadLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				scrollPaneNewMessages.setColumnHeaderView(unreadLabel);
 				
-				GridBagConstraints gbc_scrollPaneNewMessages = new GridBagConstraints();
-				gbc_scrollPaneNewMessages.fill = GridBagConstraints.HORIZONTAL;
-				gbc_scrollPaneNewMessages.gridx = 0;
-				gbc_scrollPaneNewMessages.gridy = 1;
-				unreadMessagePanel.add(scrollPaneNewMessages, gbc_scrollPaneNewMessages);
+				listNewMessages = new JList<Thread>();
+				listNewMessages.setEnabled(false);
+				
+				scrollPaneNewMessages.setViewportView(listNewMessages);
 			}
-			serviceQueueView.setLeftComponent(unreadMessagePanel);
+			serviceQueueView.setLeftComponent(scrollPaneNewMessages);
 		}
 		{
-			JPanel waitingMessagePanel = new JPanel();
-			GridBagLayout gbl_waitingMessagePanel = new GridBagLayout();
-			gbl_waitingMessagePanel.columnWidths = new int[]{0, 0};
-			gbl_waitingMessagePanel.rowHeights = new int[]{0, 0, 0};
-			gbl_waitingMessagePanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_waitingMessagePanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			waitingMessagePanel.setLayout(gbl_waitingMessagePanel);
+				
+			scrollPaneWaitingMessages = new JScrollPane();
+			scrollPaneWaitingMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			{
-				
-				JScrollPane scrollPaneWaitingMessages = new JScrollPane();
-				scrollPaneWaitingMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				{
-					JPanel waitingMessageListPanel = new JPanel();
-					GridBagLayout gbl_waitingMessageListPanel = new GridBagLayout();
-					gbl_waitingMessageListPanel.columnWidths = new int[]{0, 0};
-					gbl_waitingMessageListPanel.rowHeights = new int[]{0, 0};
-					gbl_waitingMessageListPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-					gbl_waitingMessageListPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-					waitingMessageListPanel.setLayout(gbl_waitingMessageListPanel);
-					
-					listWaitingMessages = new JList<Thread>();
-					listWaitingMessages.setEnabled(false);
-					listWaitingMessages.setCellRenderer(new MessageView());
-					GridBagConstraints gbc_listWaitingMessages = new GridBagConstraints();
-					gbc_listWaitingMessages.fill = GridBagConstraints.BOTH;
-					gbc_listWaitingMessages.gridx = 0;
-					gbc_listWaitingMessages.gridy = 0;
-					waitingMessageListPanel.add(listWaitingMessages, gbc_listWaitingMessages);
-				
-					scrollPaneWaitingMessages.setViewportView(waitingMessageListPanel);
-				}
 				JLabel waitingLabel = new JLabel("Read Messages Waiting For Response");
-				waitingLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
-				GridBagConstraints gbc_waitingLabel = new GridBagConstraints();
-				gbc_waitingLabel.gridx = 0;
-				gbc_waitingLabel.gridy = 0;
-				waitingMessagePanel.add(waitingLabel, gbc_waitingLabel);
+				waitingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				scrollPaneWaitingMessages.setColumnHeaderView(waitingLabel);
 				
-				GridBagConstraints gbc_scrollPaneWaitingMessages = new GridBagConstraints();
-				gbc_scrollPaneWaitingMessages.fill = GridBagConstraints.BOTH;
-				gbc_scrollPaneWaitingMessages.gridx = 0;
-				gbc_scrollPaneWaitingMessages.gridy = 1;
-				waitingMessagePanel.add(scrollPaneWaitingMessages, gbc_scrollPaneWaitingMessages);
+				listWaitingMessages = new JList<Thread>();
+				listWaitingMessages.setEnabled(false);
+				
+				scrollPaneWaitingMessages.setViewportView(listWaitingMessages);
 			}
-			serviceQueueView.setRightComponent(waitingMessagePanel);
+			serviceQueueView.setRightComponent(scrollPaneWaitingMessages);
 		}
 	}
 	
@@ -211,5 +149,13 @@ public class ServiceQueueView extends JPanel {
 	public void setRenderer(ListCellRenderer<Thread> renderer){
 		listNewMessages.setCellRenderer(renderer);
 		listWaitingMessages.setCellRenderer(renderer);
+		if(renderer instanceof JComponent){
+			JComponent component = (JComponent)renderer;
+			if(component.getPreferredSize() != null){
+				scrollPaneNewMessages.setPreferredSize(component.getPreferredSize());
+				scrollPaneWaitingMessages.setPreferredSize(component.getPreferredSize());
+			}
+		}
+		
 	}
 }
