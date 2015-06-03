@@ -66,9 +66,13 @@ public class ServiceQueueController extends JFrame implements ActionListener{
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		
 		try {
 			ServiceQueueController frame = new ServiceQueueController();
-			frame.view.setView(ServiceQueueFactory.getServiceQueueInstance());
+			ServiceQueue newQueue = new ServiceQueue();
+			newQueue.setUnread(new ArrayList<Thread>());
+			newQueue.setWaiting(new ArrayList<Thread>());
+			frame.view.setView(newQueue);
 			frame.setVisible(true);
 			while(true){
 				try{
@@ -82,12 +86,14 @@ public class ServiceQueueController extends JFrame implements ActionListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public ServiceQueueController() {
+		setTitle(GmailFactory.class.getResource("/client_secret.json").toString());//"Copyright 2015 Brian Martyn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 550);
 		{
@@ -174,7 +180,7 @@ public class ServiceQueueController extends JFrame implements ActionListener{
 			// Sets next component to the far right
 			menuBar.add(Box.createGlue());
 			
-			lblLastUpdate = new JLabel(new SimpleDateFormat("MM/dd hh:mm:ss").format(new Date()));
+			lblLastUpdate = new JLabel(new SimpleDateFormat("MM/dd/yy hh:mm:ss").format(new Date()));
 			lblLastUpdate.setHorizontalAlignment(SwingConstants.CENTER);
 			menuBar.add(lblLastUpdate);
 		}
@@ -213,7 +219,8 @@ public class ServiceQueueController extends JFrame implements ActionListener{
 			newQueue.setWaiting(new ArrayList<Thread>());
 		}
 		view.setView(newQueue);
-		lblLastUpdate.setText(new SimpleDateFormat("MM/dd hh:mm:ss").format(new Date()));
+		view.repaint();
+		lblLastUpdate.setText(new SimpleDateFormat("MM/dd/yy hh:mm:ss").format(new Date()));
 		notifyOverdue(newQueue);
 	}
 	
