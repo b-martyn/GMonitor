@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
@@ -37,14 +36,13 @@ public class ServiceQueueView extends JPanel {
 	
 	private JList<Thread> listNewMessages;
 	private JList<Thread> listWaitingMessages;
-	private JScrollPane scrollPaneNewMessages;
-	private JScrollPane scrollPaneWaitingMessages;
 	
 	/**
 	 * Instantiates a new service queue view.
 	 */
 	public ServiceQueueView() {
 		initialize();
+		setRenderer(new MessageView());
 	}
 	
 	/**
@@ -67,6 +65,7 @@ public class ServiceQueueView extends JPanel {
 		setLayout(gridBagLayout);
 		
 		JSplitPane serviceQueueView = new JSplitPane();
+		serviceQueueView.setResizeWeight(0.5d);
 		serviceQueueView.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		GridBagConstraints gbc_serviceQueueView = new GridBagConstraints();
 		gbc_serviceQueueView.fill = GridBagConstraints.BOTH;
@@ -75,7 +74,7 @@ public class ServiceQueueView extends JPanel {
 		add(serviceQueueView, gbc_serviceQueueView);
 		
 		{
-			scrollPaneNewMessages = new JScrollPane();
+			JScrollPane scrollPaneNewMessages = new JScrollPane();
 			scrollPaneNewMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			{
 				JLabel unreadLabel = new JLabel("Pending Unread Messages");
@@ -91,7 +90,7 @@ public class ServiceQueueView extends JPanel {
 		}
 		{
 				
-			scrollPaneWaitingMessages = new JScrollPane();
+			JScrollPane scrollPaneWaitingMessages = new JScrollPane();
 			scrollPaneWaitingMessages.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			{
 				JLabel waitingLabel = new JLabel("Read Messages Waiting For Response");
@@ -149,13 +148,5 @@ public class ServiceQueueView extends JPanel {
 	public void setRenderer(ListCellRenderer<Thread> renderer){
 		listNewMessages.setCellRenderer(renderer);
 		listWaitingMessages.setCellRenderer(renderer);
-		if(renderer instanceof JComponent){
-			JComponent component = (JComponent)renderer;
-			if(component.getPreferredSize() != null){
-				scrollPaneNewMessages.setPreferredSize(component.getPreferredSize());
-				scrollPaneWaitingMessages.setPreferredSize(component.getPreferredSize());
-			}
-		}
-		
 	}
 }
